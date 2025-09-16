@@ -18,8 +18,8 @@ namespace HotelBooking.UnitTests
         {
             var rooms = new List<Room>
             {
-                new Room { Id=1, Description="A" },
-                new Room { Id=2, Description="B" },
+                new() { Id=1, Description="A" },
+                new() { Id=2, Description="B" },
             };
 
             // Create fake RoomRepository. 
@@ -83,6 +83,30 @@ namespace HotelBooking.UnitTests
             var result = await controller.Get(3);
             // Assert
             Assert.IsType<NotFoundResult>(result);
+        }
+        
+        [Fact]
+        public async Task Post_WhenRoomIsNull_ReturnsBadRequest()
+        {
+            // Act
+            var result = await controller.Post(null);
+
+            // Assert
+            Assert.IsType<BadRequestResult>(result);
+        }
+        
+        [Fact]
+        public async Task Post_WhenRoomIsNotNull_ReturnsCreatedAtRoute()
+        {
+            // Arrange
+            var room = new Room { Id = 3, Description = "C" };
+
+            // Act
+            var result = await controller.Post(room);
+
+            // Assert against the mock object
+            fakeRoomRepository.Verify(x => x.AddAsync(room), Times.Once);
+            Assert.IsType<CreatedAtRouteResult>(result);
         }
 
         [Fact]
