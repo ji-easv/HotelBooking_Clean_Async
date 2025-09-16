@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using HotelBooking.Core;
 using Xunit;
 using System.Threading.Tasks;
+using HotelBooking.Core.Interfaces;
 using HotelBooking.Core.Services;
 using HotelBooking.UnitTests.Data;
+using HotelBooking.UnitTests.Utils;
 using Moq;
 
 
@@ -17,51 +19,16 @@ public class BookingManagerTests
 
     public BookingManagerTests()
     {
-        var fullyOccupiedStartDate = DateTime.Today.AddDays(10);
-        var fullyOccupiedEndDate = DateTime.Today.AddDays(20);
-
-        var bookings = new List<Booking>
-        {
-            new()
-            {
-                Id = 1, StartDate = DateTime.Today.AddDays(1), EndDate = DateTime.Today.AddDays(2), IsActive = true,
-                CustomerId = 1, RoomId = 1
-            },
-            new()
-            {
-                Id = 1, StartDate = fullyOccupiedStartDate, EndDate = fullyOccupiedEndDate, IsActive = true,
-                CustomerId = 1, RoomId = 1
-            },
-            new()
-            {
-                Id = 2, StartDate = fullyOccupiedStartDate, EndDate = fullyOccupiedEndDate, IsActive = true,
-                CustomerId = 2, RoomId = 2
-            },
-        };
-
-        bookingRepository = new Mock<IRepository<Booking>>();
-        bookingRepository.Setup(x => x.GetAllAsync()).ReturnsAsync(bookings);
-        bookingRepository.Setup(x => x.AddAsync(It.IsAny<Booking>())).Returns(Task.CompletedTask);
-
-        var roomRepository = new Mock<IRepository<Room>>();
-
-        var rooms = new List<Room>
-        {
-            new() { Id = 1, Description = "A" },
-            new() { Id = 2, Description = "B" },
-        };
-        roomRepository.Setup(x => x.GetAllAsync()).ReturnsAsync(rooms);
-
+        bookingRepository = Utilities.SetUpBookingRepositoryMocks();
+        var roomRepository = Utilities.SetUpRoomRepositoryMocks();
         bookingManager = new BookingManager(bookingRepository.Object, roomRepository.Object);
     }
 
     [Theory]
-    [InlineData(1, 2, true)]
-    [InlineData(25, 26, true)]
-    [InlineData(21, 22, true)]
-    [InlineData(9, 10, false)]
-    public async Task CreateBooking_VariousDateRanges_ReturnsExpectedAvailability(int startOffset, int endOffset,
-        bool expectedResult)
+    [InlineData(1, 2)]
+    [InlineData(25, 26)]
+    [InlineData(21, 22)]
+    public async Task CreateBooking_BookingAllowedInline_ReturnsTrue(int startOffset, int endOffset)
     {
         // Arrange
         var booking = new Booking
@@ -75,18 +42,54 @@ public class BookingManagerTests
         var result = await bookingManager.CreateBooking(booking);
 
         // Assert
-        Assert.Equal(expectedResult, result);
+        Assert.True(result);
+        bookingRepository.Verify(x => x.AddAsync(It.IsAny<Booking>()), Times.Once);
     }
 
     [Theory]
-    [ClassData(typeof(BookingTestData))]
-    public async Task CreateBooking_WithComplexScenarios_ReturnsExpectedResult(Booking booking, bool expectedResult)
+    [ClassData(typeof(FreeBookingTestData))]
+    public async Task CreateBooking_BookingAllowed_ReturnsTrue(Booking booking)
     {
         // Act
         var result = await bookingManager.CreateBooking(booking);
 
         // Assert
-        Assert.Equal(expectedResult, result);
+        Assert.True(result);
+        bookingRepository.Verify(x => x.AddAsync(It.IsAny<Booking>()), Times.Once);
+    }
+
+    [Theory]
+    [InlineData(9, 10)]
+    [InlineData(20, 21)]
+    [InlineData(15, 18)]
+    public async Task CreateBooking_BookingNotAllowedInline_ReturnsFalse(int startOffset, int endOffset)
+    {
+        // Arrange
+        var booking = new Booking
+        {
+            StartDate = DateTime.Today.AddDays(startOffset),
+            EndDate = DateTime.Today.AddDays(endOffset),
+            CustomerId = 1
+        };
+
+        // Act
+        var result = await bookingManager.CreateBooking(booking);
+
+        // Assert
+        Assert.False(result);
+        bookingRepository.Verify(x => x.AddAsync(It.IsAny<Booking>()), Times.Never);
+    }
+
+    [Theory]
+    [ClassData(typeof(OccupiedBookingTestData))]
+    public async Task CreateBooking_BookingNotAllowed_ReturnsFalse(Booking booking)
+    {
+        // Act
+        var result = await bookingManager.CreateBooking(booking);
+
+        // Assert
+        Assert.False(result);
+        bookingRepository.Verify(x => x.AddAsync(It.IsAny<Booking>()), Times.Never);
     }
 
     [Fact]
@@ -123,8 +126,8 @@ public class BookingManagerTests
         int endOffset)
     {
         // Arrange
-        DateTime start = DateTime.Today.AddDays(startOffset);
-        DateTime end = DateTime.Today.AddDays(endOffset);
+        var start = DateTime.Today.AddDays(startOffset);
+        var end = DateTime.Today.AddDays(endOffset);
 
         // Act
         Task result() => bookingManager.FindAvailableRoom(start, end);
@@ -132,7 +135,7 @@ public class BookingManagerTests
         // Assert
         await Assert.ThrowsAsync<ArgumentException>(result);
     }
-    
+
     [Theory]
     [ClassData(typeof(DateRangeTestData))]
     public async Task GetFullyOccupiedDates_WithVariousDateRanges_ReturnsCorrectCount(DateTime startDate,

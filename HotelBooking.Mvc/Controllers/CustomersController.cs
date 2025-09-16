@@ -5,14 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HotelBooking.Mvc.Controllers
 {
-    public class CustomersController : Controller
+    public class CustomersController(IRepository<Customer> repos) : Controller
     {
-        private IRepository<Customer> repository;
-
-        public CustomersController(IRepository<Customer> repos)
-        {
-            repository = repos;
-        }
+        private IRepository<Customer> repository = repos;
 
         // GET: Customers
         public async Task<IActionResult> Index()
