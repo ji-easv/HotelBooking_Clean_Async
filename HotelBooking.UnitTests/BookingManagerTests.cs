@@ -198,5 +198,82 @@ namespace HotelBooking.UnitTests
             // Assert
             await Assert.ThrowsAsync<ArgumentException>(result);
         }
+
+        [Theory]
+        [InlineData(1, 2, true)]
+        [InlineData(25, 26, true)]
+        [InlineData(21, 22, true)]
+        [InlineData(9, 10, false)]
+        public async Task CreateBooking_VariousDateRanges_ReturnsExpectedAvailability(int startOffset, int endOffset, bool expectedResult)
+        {
+            // Arrange
+            var booking = new Booking
+            {
+                StartDate = DateTime.Today.AddDays(startOffset),
+                EndDate = DateTime.Today.AddDays(endOffset),
+                CustomerId = 1
+            };
+
+            // Act
+            var result = await bookingManager.CreateBooking(booking);
+
+            // Assert
+            Assert.Equal(expectedResult, result);
+        }
+
+        [Theory]
+        [MemberData(nameof(BookingTestData))]
+        public async Task CreateBooking_WithComplexScenarios_ReturnsExpectedResult(Booking booking, bool expectedResult)
+        {
+            // Act
+            var result = await bookingManager.CreateBooking(booking);
+
+            // Assert
+            Assert.Equal(expectedResult, result);
+        }
+
+        public static IEnumerable<object[]> BookingTestData =>
+            new List<object[]>
+            {
+                new object[]
+                {
+                    new Booking { StartDate = DateTime.Today.AddDays(1), EndDate = DateTime.Today.AddDays(2), CustomerId = 1 },
+                    true
+                },
+                new object[]
+                {
+                    new Booking { StartDate = DateTime.Today.AddDays(15), EndDate = DateTime.Today.AddDays(16), CustomerId = 2 },
+                    false
+                },
+                new object[]
+                {
+                    new Booking { StartDate = DateTime.Today.AddDays(25), EndDate = DateTime.Today.AddDays(30), CustomerId = 3 },
+                    true
+                }
+            };
+
+        [Theory]
+        [ClassData(typeof(DateRangeTestData))]
+        public async Task GetFullyOccupiedDates_WithVariousDateRanges_ReturnsCorrectCount(DateTime startDate, DateTime endDate, int expectedCount)
+        {
+            // Act
+            var result = await bookingManager.GetFullyOccupiedDates(startDate, endDate);
+
+            // Assert
+            Assert.Equal(expectedCount, result.Count);
+        }
+    }
+
+    public class DateRangeTestData : IEnumerable<object[]>
+    {
+        public IEnumerator<object[]> GetEnumerator()
+        {
+            yield return new object[] { DateTime.Today.AddDays(1), DateTime.Today.AddDays(5), 0 };
+            yield return new object[] { DateTime.Today.AddDays(10), DateTime.Today.AddDays(20), 11 };
+            yield return new object[] { DateTime.Today.AddDays(15), DateTime.Today.AddDays(18), 4 };
+            yield return new object[] { DateTime.Today.AddDays(25), DateTime.Today.AddDays(30), 0 };
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

@@ -140,12 +140,97 @@ namespace HotelBooking.UnitTests
                     Throws<InvalidOperationException>();
 
             Task result() => controller.Delete(3);
-            
+
             // Assert
             await Assert.ThrowsAsync<InvalidOperationException>(result);
 
             // Assert against the mock object
             fakeRoomRepository.Verify(x => x.RemoveAsync(It.IsAny<int>()));
         }
+
+        [Theory]
+        [InlineData(1, true)]
+        [InlineData(2, true)]
+        [InlineData(0, false)]
+        [InlineData(-1, false)]
+        [InlineData(3, false)]
+        public async Task GetById_WithVariousIds_ReturnsExpectedResult(int roomId, bool shouldReturnRoom)
+        {
+            // Act
+            var result = await controller.Get(roomId);
+
+            // Assert
+            if (shouldReturnRoom)
+            {
+                Assert.IsType<ObjectResult>(result);
+                var objectResult = result as ObjectResult;
+                Assert.NotNull(objectResult.Value);
+            }
+            else
+            {
+                Assert.IsType<NotFoundResult>(result);
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(RoomTestData))]
+        public async Task Post_WithVariousRooms_ReturnsExpectedResult(Room room, Type expectedResultType, bool shouldCallAdd)
+        {
+            // Act
+            var result = await controller.Post(room);
+
+            // Assert
+            Assert.IsType(expectedResultType, result);
+            if (shouldCallAdd)
+            {
+                fakeRoomRepository.Verify(x => x.AddAsync(room), Times.Once);
+            }
+            else
+            {
+                fakeRoomRepository.Verify(x => x.AddAsync(It.IsAny<Room>()), Times.Never);
+            }
+        }
+
+        public static IEnumerable<object[]> RoomTestData =>
+            new List<object[]>
+            {
+                new object[] { new Room { Id = 3, Description = "C" }, typeof(CreatedAtRouteResult), true },
+                new object[] { new Room { Id = 4, Description = "D" }, typeof(CreatedAtRouteResult), true },
+                new object[] { null, typeof(BadRequestResult), false }
+            };
+
+        [Theory]
+        [ClassData(typeof(RoomValidationTestData))]
+        public void Room_Properties_AreSetCorrectly(int id, string description, bool isValid)
+        {
+            // Arrange & Act
+            var room = new Room { Id = id, Description = description };
+
+            // Assert
+            if (isValid)
+            {
+                Assert.True(room.Id > 0);
+                Assert.False(string.IsNullOrEmpty(room.Description));
+            }
+            else
+            {
+                Assert.True(room.Id <= 0 || string.IsNullOrEmpty(room.Description));
+            }
+        }
+    }
+
+    public class RoomValidationTestData : IEnumerable<object[]>
+    {
+        public IEnumerator<object[]> GetEnumerator()
+        {
+            yield return new object[] { 1, "Room A", true };
+            yield return new object[] { 2, "Room B", true };
+            yield return new object[] { 0, "Invalid Room", false };
+            yield return new object[] { -1, "Negative ID", false };
+            yield return new object[] { 1, "", false };
+            yield return new object[] { 1, null, false };
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }
