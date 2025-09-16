@@ -19,8 +19,8 @@ public class BookingsControllerTests
     {
         var bookings = new List<Booking>
         {
-            new Booking { Id=1, RoomId=1, StartDate=DateTime.Now, EndDate=DateTime.Now.AddDays(2) },
-            new Booking { Id=2, RoomId=2, StartDate=DateTime.Now, EndDate=DateTime.Now.AddDays(3) },
+            new() { Id=1, RoomId=1, StartDate=DateTime.Now, EndDate=DateTime.Now.AddDays(2) },
+            new() { Id=2, RoomId=2, StartDate=DateTime.Now, EndDate=DateTime.Now.AddDays(3) },
         };
 
         // Create mock BookingRepository. 

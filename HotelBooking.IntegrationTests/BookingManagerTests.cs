@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using HotelBooking.Core;
+using HotelBooking.Core.Services;
 using HotelBooking.Infrastructure;
 using HotelBooking.Infrastructure.Repositories;
 using Microsoft.Data.Sqlite;

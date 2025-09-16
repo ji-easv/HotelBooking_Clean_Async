@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using HotelBooking.Core;
-using HotelBooking.UnitTests.Fakes;
 using Xunit;
-using System.Linq;
 using System.Threading.Tasks;
+using HotelBooking.Core.Services;
 using Moq;
 
 
@@ -43,34 +42,16 @@ namespace HotelBooking.UnitTests
             bookingRepository.Setup(x => x.GetAllAsync()).ReturnsAsync(bookings);
             bookingRepository.Setup(x => x.AddAsync(It.IsAny<Booking>())).Returns(Task.CompletedTask);
 
-            var roomRepository1 = new Mock<IRepository<Room>>();
-
+            var roomRepository = new Mock<IRepository<Room>>();
 
             var rooms = new List<Room>
             {
                 new() { Id = 1, Description = "A" },
                 new() { Id = 2, Description = "B" },
             };
-            roomRepository1.Setup(x => x.GetAllAsync()).ReturnsAsync(rooms);
+            roomRepository.Setup(x => x.GetAllAsync()).ReturnsAsync(rooms);
 
-            bookingManager = new BookingManager(bookingRepository.Object, roomRepository1.Object);
-        }
-
-        [Theory]
-        [InlineData(5, 4)] // end date before start date
-        [InlineData(-1, 1)] // start date in the past
-        public async Task FindAvailableRoom_StartDateNotInTheFuture_ThrowsArgumentException(int startOffset,
-            int endOffset)
-        {
-            // Arrange
-            DateTime start = DateTime.Today.AddDays(startOffset);
-            DateTime end = DateTime.Today.AddDays(endOffset);
-
-            // Act
-            Task result() => bookingManager.FindAvailableRoom(start, end);
-
-            // Assert
-            await Assert.ThrowsAsync<ArgumentException>(result);
+            bookingManager = new BookingManager(bookingRepository.Object, roomRepository.Object);
         }
 
         [Fact]
@@ -138,6 +119,84 @@ namespace HotelBooking.UnitTests
             
             // Assert
             Assert.Equal(2, roomId);
+        }
+        
+        [Theory]
+        [InlineData(5, 4)] // end date before start date
+        [InlineData(-1, 1)] // start date in the past
+        public async Task FindAvailableRoom_StartDateNotInTheFuture_ThrowsArgumentException(int startOffset,
+            int endOffset)
+        {
+            // Arrange
+            DateTime start = DateTime.Today.AddDays(startOffset);
+            DateTime end = DateTime.Today.AddDays(endOffset);
+
+            // Act
+            Task result() => bookingManager.FindAvailableRoom(start, end);
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentException>(result);
+        }
+
+        [Fact]
+        public async Task GetFullyOccupiedDates_NoBookings_ReturnsEmptyList()
+        {
+            // Arrange
+            var emptyBookingRepository = new Mock<IRepository<Booking>>();
+            emptyBookingRepository.Setup(x => x.GetAllAsync()).ReturnsAsync(new List<Booking>());
+
+            var roomRepository = new Mock<IRepository<Room>>();
+            var rooms = new List<Room>
+            {
+                new() { Id = 1, Description = "A" },
+                new() { Id = 2, Description = "B" },
+            };
+            roomRepository.Setup(x => x.GetAllAsync()).ReturnsAsync(rooms);
+
+            var bookingManagerWithNoBookings = new BookingManager(emptyBookingRepository.Object,
+                roomRepository.Object);
+
+            var start = DateTime.Today.AddDays(1);
+            var end = DateTime.Today.AddDays(30);
+
+            // Act
+            var result = await bookingManagerWithNoBookings.GetFullyOccupiedDates(start, end);
+
+            // Assert
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public async Task GetFullyOccupiedDates_BookingsExist_ReturnsCorrectFullyOccupiedDates()
+        {
+            // Arrange
+            var start = DateTime.Today;
+            var end = DateTime.Today.AddDays(30);
+            var expectedFullyOccupiedDates = new List<DateTime>();
+            for (var d = DateTime.Today.AddDays(10); d <= DateTime.Today.AddDays(20); d = d.AddDays(1))
+            {
+                expectedFullyOccupiedDates.Add(d);
+            }
+
+            // Act
+            var result = await bookingManager.GetFullyOccupiedDates(start, end);
+
+            // Assert
+            Assert.Equal(expectedFullyOccupiedDates, result);
+        }
+
+        [Fact]
+        public async Task GetFullyOccupiedDates_StartDateAfterEndDate_ThrowsArgumentException()
+        {
+            // Arrange
+            var start = DateTime.Today.AddDays(10);
+            var end = DateTime.Today;
+
+            // Act
+            Task result() => bookingManager.GetFullyOccupiedDates(start, end);
+
+            // Assert
+            await Assert.ThrowsAsync<ArgumentException>(result);
         }
     }
 }
