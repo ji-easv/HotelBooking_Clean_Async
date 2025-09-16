@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace HotelBooking.Core
+namespace HotelBooking.Core.Interfaces
 {
     public interface IBookingManager
     {

@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using HotelBooking.Core;
+﻿using HotelBooking.Core;
+using HotelBooking.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -7,29 +7,20 @@ namespace HotelBooking.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class BookingsController : Controller
+    public class BookingsController(IRepository<Booking> bookingRepos, IBookingManager manager) : Controller
     {
-        private IRepository<Booking> bookingRepository;
-        private IBookingManager bookingManager;
-
-        public BookingsController(IRepository<Booking> bookingRepos, IBookingManager manager)
-        {
-            bookingRepository = bookingRepos;
-            bookingManager = manager;
-        }
-
         // GET: bookings
         [HttpGet(Name = "GetBookings")]
         public async Task<IEnumerable<Booking>> Get()
         {
-            return await bookingRepository.GetAllAsync();
+            return await bookingRepos.GetAllAsync();
         }
 
         // GET bookings/5
         [HttpGet("{id}", Name = "GetBooking")]
         public async Task<IActionResult> Get(int id)
         {
-            var item = await bookingRepository.GetAsync(id);
+            var item = await bookingRepos.GetAsync(id);
             if (item == null)
             {
                 return NotFound();
@@ -46,7 +37,7 @@ namespace HotelBooking.WebApi.Controllers
                 return BadRequest();
             }
 
-            bool created = await bookingManager.CreateBooking(booking);
+            bool created = await manager.CreateBooking(booking);
 
             if (created)
             {
@@ -68,7 +59,7 @@ namespace HotelBooking.WebApi.Controllers
                 return BadRequest();
             }
 
-            var modifiedBooking = await bookingRepository.GetAsync(id);
+            var modifiedBooking = await bookingRepos.GetAsync(id);
 
             if (modifiedBooking == null)
             {
@@ -81,7 +72,7 @@ namespace HotelBooking.WebApi.Controllers
             modifiedBooking.IsActive = booking.IsActive;
             modifiedBooking.CustomerId = booking.CustomerId;
 
-            await bookingRepository.EditAsync(modifiedBooking);
+            await bookingRepos.EditAsync(modifiedBooking);
             return NoContent();
         }
 
@@ -89,12 +80,12 @@ namespace HotelBooking.WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            if (await bookingRepository.GetAsync(id) == null)
+            if (await bookingRepos.GetAsync(id) == null)
             {
                 return NotFound();
             }
 
-            await bookingRepository.RemoveAsync(id);
+            await bookingRepos.RemoveAsync(id);
             return NoContent();
         }
 

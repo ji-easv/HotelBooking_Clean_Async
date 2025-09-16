@@ -1,4 +1,5 @@
 ﻿using HotelBooking.Core;
+using HotelBooking.Core.Interfaces;
 using HotelBooking.Core.Services;
 using HotelBooking.Infrastructure;
 using HotelBooking.Infrastructure.Repositories;
