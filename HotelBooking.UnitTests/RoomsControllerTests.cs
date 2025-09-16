@@ -75,6 +75,15 @@ namespace HotelBooking.UnitTests
             // Assert
             Assert.InRange<int>(roomId, 1, 2);
         }
+        
+        [Fact]
+        public async Task GetById_RoomDoesNotExist_ReturnsNotFoundResult()
+        {
+            // Act
+            var result = await controller.Get(3);
+            // Assert
+            Assert.IsType<NotFoundResult>(result);
+        }
 
         [Fact]
         public async Task Delete_WhenIdIsLargerThanZero_RemoveIsCalled()
