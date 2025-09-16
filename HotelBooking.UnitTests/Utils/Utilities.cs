@@ -23,12 +23,12 @@ public static class Utilities
             },
             new()
             {
-                Id = 1, StartDate = FullyOccupiedStartDate, EndDate = FullyOccupiedEndDate, IsActive = true,
+                Id = 2, StartDate = FullyOccupiedStartDate, EndDate = FullyOccupiedEndDate, IsActive = true,
                 CustomerId = 1, RoomId = 1
             },
             new()
             {
-                Id = 2, StartDate = FullyOccupiedStartDate, EndDate = FullyOccupiedEndDate, IsActive = true,
+                Id = 3, StartDate = FullyOccupiedStartDate, EndDate = FullyOccupiedEndDate, IsActive = true,
                 CustomerId = 2, RoomId = 2
             },
         };
