@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HotelBooking.Core
+namespace HotelBooking.Core.Services
 {
     public class BookingManager : IBookingManager
     {
@@ -19,19 +19,14 @@ namespace HotelBooking.Core
 
         public async Task<bool> CreateBooking(Booking booking)
         {
-            int roomId = await FindAvailableRoom(booking.StartDate, booking.EndDate);
+            var roomId = await FindAvailableRoom(booking.StartDate, booking.EndDate);
 
-            if (roomId >= 0)
-            {
-                booking.RoomId = roomId;
-                booking.IsActive = true;
-                await bookingRepository.AddAsync(booking);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            if (roomId < 0) return false;
+            
+            booking.RoomId = roomId;
+            booking.IsActive = true;
+            await bookingRepository.AddAsync(booking);
+            return true;
         }
 
         public async Task<int> FindAvailableRoom(DateTime startDate, DateTime endDate)
@@ -51,6 +46,7 @@ namespace HotelBooking.Core
                     return room.Id;
                 }
             }
+            
             return -1;
         }
 
@@ -59,9 +55,9 @@ namespace HotelBooking.Core
             if (startDate > endDate)
                 throw new ArgumentException("The start date cannot be later than the end date.");
 
-            List<DateTime> fullyOccupiedDates = new List<DateTime>();
+            var fullyOccupiedDates = new List<DateTime>();
             var rooms = await roomRepository.GetAllAsync();
-            int noOfRooms = rooms.Count();
+            var noOfRooms = rooms.Count();
             var bookings = await bookingRepository.GetAllAsync();
 
             if (bookings.Any())
@@ -77,6 +73,5 @@ namespace HotelBooking.Core
             }
             return fullyOccupiedDates;
         }
-
     }
 }
