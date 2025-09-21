@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HotelBooking.Core;
+using HotelBooking.Core.Interfaces;
+using HotelBooking.UnitTests.Data;
+using HotelBooking.UnitTests.Utils;
 using HotelBooking.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -11,28 +14,15 @@ namespace HotelBooking.UnitTests;
 
 public class BookingsControllerTests
 {
-    private BookingsController controller;
-    private Mock<IRepository<Booking>> mockBookingRepository;
-    private Mock<IBookingManager> mockBookingManager;
+    private readonly BookingsController controller;
+    private readonly Mock<IRepository<Booking>> mockBookingRepository;
+    private readonly Mock<IBookingManager> mockBookingManager;
     
     public BookingsControllerTests()
     {
-        var bookings = new List<Booking>
-        {
-            new() { Id=1, RoomId=1, StartDate=DateTime.Now, EndDate=DateTime.Now.AddDays(2) },
-            new() { Id=2, RoomId=2, StartDate=DateTime.Now, EndDate=DateTime.Now.AddDays(3) },
-        };
-
         // Create mock BookingRepository. 
-        mockBookingRepository = new Mock<IRepository<Booking>>();
-
-        // Implement mock GetAll() method.
-        mockBookingRepository.Setup(x => x.GetAllAsync()).ReturnsAsync(bookings);
-
-        // Implement mock Get() method.
-        mockBookingRepository.Setup(x =>
-        x.GetAsync(It.IsInRange<int>(1, 2, Moq.Range.Inclusive))).ReturnsAsync(bookings[1]);
-
+        mockBookingRepository = Utilities.SetUpBookingRepositoryMocks();
+        
         // Create a mock IBookingManager
         mockBookingManager = new Mock<IBookingManager>();
         mockBookingManager.Setup(m => m.CreateBooking(It.IsAny<Booking>())).ReturnsAsync(true);
@@ -49,21 +39,23 @@ public class BookingsControllerTests
 
         // Assert
         Assert.NotNull(result);
-        Assert.Equal(2, result.Count);
+        Assert.Equal(3, result.Count);
     }
 
-    [Fact]
-    public async Task Get_ExistingId_ReturnsCorrectBooking()
+    [Theory]
+    [InlineData(1)]
+    [InlineData(2)]
+    public async Task Get_ExistingId_ReturnsCorrectBooking(int bookingId)
     {
         // Act
-        var result = await controller.Get(2);
+        var result = await controller.Get(bookingId);
         
         // Assert
         Assert.IsType<ObjectResult>(result);
         Assert.NotNull(result);
         var booking = (result as ObjectResult)!.Value as Booking;
         Assert.NotNull(booking);
-        Assert.Equal(2, booking.Id);
+        Assert.Equal(bookingId, booking.Id);
     }
     
     [Fact]
@@ -76,15 +68,10 @@ public class BookingsControllerTests
         Assert.IsType<NotFoundResult>(result);
     }
 
-    [Fact]
-    public async Task Post_ValidBooking_ReturnsCreatedAtRoute()
+    [Theory]
+    [ClassData(typeof(FreeBookingTestData))]
+    public async Task Post_ValidBooking_ReturnsCreatedAtRoute(Booking newBooking)
     {
-        var newBooking = new Booking
-        {
-            StartDate = DateTime.Now.AddDays(5),
-            EndDate = DateTime.Now.AddDays(7)
-        };
-        
         // Act
         var result = await controller.Post(newBooking);
         

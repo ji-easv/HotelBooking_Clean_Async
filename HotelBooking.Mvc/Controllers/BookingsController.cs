@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HotelBooking.Core;
+using HotelBooking.Core.Interfaces;
 using HotelBooking.Mvc.Models;
 
 namespace HotelBooking.Mvc.Controllers

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using HotelBooking.Core;
+﻿using HotelBooking.Core;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -8,27 +6,20 @@ namespace HotelBooking.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class RoomsController : Controller
+    public class RoomsController(IRepository<Room> repos) : Controller
     {
-        private readonly IRepository<Room> repository;
-
-        public RoomsController(IRepository<Room> repos)
-        {
-            repository = repos;
-        }
-
         // GET: rooms
         [HttpGet(Name = "GetRooms")]
         public async Task<IEnumerable<Room>> Get()
         {
-            return await repository.GetAllAsync();
+            return await repos.GetAllAsync();
         }
 
         // GET rooms/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var item = await repository.GetAsync(id);
+            var item = await repos.GetAsync(id);
             if (item == null)
             {
                 return NotFound();
@@ -45,7 +36,7 @@ namespace HotelBooking.WebApi.Controllers
                 return BadRequest();
             }
 
-            await repository.AddAsync(room);
+            await repos.AddAsync(room);
             return CreatedAtRoute("GetRooms", null);
         }
 
@@ -56,7 +47,7 @@ namespace HotelBooking.WebApi.Controllers
         {
             if (id > 0)
             {
-                await repository.RemoveAsync(id);
+                await repos.RemoveAsync(id);
                 return NoContent();
             }
             else {
