@@ -29,7 +29,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "<integer>",
+											"value": "1",
 											"description": "(Required) "
 										}
 									]
@@ -639,12 +639,13 @@
 									"\r",
 									"// Test for content-type header\r",
 									"pm.test(\"Content-Type is application/json\", function () {\r",
-									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.equal(\"application/json\");\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
 									"});\r",
 									""
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
 							}
 						}
 					],
