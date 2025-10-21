@@ -36,9 +36,19 @@ jobs:
 
       - name: Start API
         run: dotnet run --project "HotelBooking.WebApi/HotelBooking.WebApi.csproj" --no-build &
+        env:
+          ASPNETCORE_URLS: http://localhost:5000
 
-      - name: Wait for API to start
-        run: sleep 10
+      - name: Wait for API to be ready
+        run: |
+          for i in {1..30}; do
+            if nc -z localhost 5000; then
+              echo "API is up!"
+              break
+            fi
+            echo "Waiting for API..."
+            sleep 2
+          done
 
       - name: Run Postman tests
         run: newman run "Postman/HotelBooking.postman_collection.json" --environment "Postman/postman_environment.json" --insecure
