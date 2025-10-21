@@ -41,4 +41,4 @@ jobs:
         run: sleep 10
 
       - name: Run Postman tests
-        run: newman run "Postman/HotelBooking.postman_collection.json" --insecure
+        run: newman run "Postman/HotelBooking.postman_collection.json" --environment "Postman/postman_environment.json" --insecure
