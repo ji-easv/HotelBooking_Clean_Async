@@ -1,0 +1,44 @@
+﻿name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 9.0 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore dependencies
+        run: |
+          dotnet restore "HotelBooking.Mvc/HotelBooking.Mvc.csproj"
+          dotnet restore "HotelBooking.WebApi/HotelBooking.WebApi.csproj"
+
+      - name: Build projects
+        run: |
+          dotnet build "HotelBooking.Mvc/HotelBooking.Mvc.csproj" --configuration Release --no-restore
+          dotnet build "HotelBooking.WebApi/HotelBooking.WebApi.csproj" --configuration Release --no-restore
+
+      - name: Run unit tests
+        run: dotnet test "HotelBooking.UnitTests/HotelBooking.UnitTests.csproj" --no-build --configuration Release --logger:trx
+
+      - name: Install newman
+        run: npm install -g newman
+
+      - name: Start API
+        run: dotnet run --project "HotelBooking.WebApi/HotelBooking.WebApi.csproj" --no-build &
+
+      - name: Wait for API to start
+        run: sleep 10
+
+      - name: Run Postman tests
+        run: newman run "Postman/HotelBooking.postman_collection.json" --insecure
