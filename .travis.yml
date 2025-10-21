@@ -1,4 +1,4 @@
-﻿language: csharp
+language: csharp
 dotnet: 9.0
 
 before_install:
