@@ -1,6 +1,13 @@
 ﻿language: csharp
 dotnet: 9.0
 
+before_install:
+  # Ensure .NET 9.0 SDK is installed if not present
+  - wget https://dot.net/v1/dotnet-install.sh
+  - chmod +x dotnet-install.sh
+  - ./dotnet-install.sh -c 9.0
+  - export PATH="$HOME/.dotnet:$PATH"
+
 install:
   - dotnet restore "HotelBooking.Mvc/HotelBooking.Mvc.csproj"
   - dotnet restore "HotelBooking.WebApi/HotelBooking.WebApi.csproj"
