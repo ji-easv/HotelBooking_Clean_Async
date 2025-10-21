@@ -1,16 +1,20 @@
-﻿language: node_js
-node_js:
-  - "22"
+﻿language: csharp
+dotnet: 9.0
 
 install:
+  - dotnet restore "HotelBooking.Mvc/HotelBooking.Mvc.csproj"
+  - dotnet restore "HotelBooking.WebApi/HotelBooking.WebApi.csproj"
   - npm install -g newman
-    
-before_script:
-  - export ASPNETCORE_URLS="https://+:5001;http://+:5000"
-  - dotnet restore Week\ 39\ -\ Mini\ Project/HotelBooking_Clean_Async/HotelBooking.API/HotelBooking.API.csproj
-  - dotnet build Week\ 39\ -\ Mini\ Project/HotelBooking_Clean_Async/HotelBooking.API/HotelBooking.API.csproj
-  - dotnet run --project Week\ 39\ -\ Mini\ Project/HotelBooking_Clean_Async/HotelBooking.API/HotelBooking.API.csproj &
-  - sleep 10
 
 script:
-  - newman run 'Week 39 - Mini Project/HotelBooking_Clean_Async/Postman/HotelBooking.postman_collection.json' --insecure
+  # Build and run unit tests
+  - dotnet build "HotelBooking.Mvc/HotelBooking.Mvc.csproj" --configuration Release
+  - dotnet build "HotelBooking.WebApi/HotelBooking.WebApi.csproj" --configuration Release
+  - dotnet test "HotelBooking.UnitTests/HotelBooking.UnitTests.csproj" --no-build --configuration Release --logger:trx
+
+  # Start the API in the background
+  - dotnet run --project "HotelBooking.WebApi/HotelBooking.WebApi.csproj" --no-build &
+  - sleep 10
+
+  # Run Postman tests
+  - newman run "Postman/HotelBooking.postman_collection.json" --insecure
