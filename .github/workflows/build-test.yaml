@@ -40,6 +40,7 @@ jobs:
         run: dotnet run --project "HotelBooking.WebApi/HotelBooking.WebApi.csproj" --no-build --configuration Release &
         env:
           ASPNETCORE_URLS: http://localhost:5000
+          ASPNETCORE_ENVIRONMENT: Test
 
       - name: Wait for API to be ready
         run: |
@@ -53,4 +54,4 @@ jobs:
           done
 
       - name: Run Postman tests
-        run: newman run "Postman/HotelBooking.postman_collection.json" --environment "Postman/postman_environment.json" --insecure
+        run: newman run "Postman/HotelBooking.postman_collection.json" --environment "Postman/postman_environment.json" --iteration-data "Postman/bookingTestCases.json" --insecure

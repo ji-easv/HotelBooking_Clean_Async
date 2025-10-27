@@ -24,8 +24,11 @@ namespace HotelBooking.Core.Services
 
             if (roomId < 0) return false;
             
+            var room =  await roomRepository.GetAsync(roomId);
             booking.RoomId = roomId;
             booking.IsActive = true;
+            booking.Room = room;
+            
             await bookingRepository.AddAsync(booking);
             return true;
         }

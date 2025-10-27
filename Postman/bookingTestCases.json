@@ -1,0 +1,5 @@
+﻿[
+  { "status": 201, "startOffset": 1, "endOffset": 2 },
+  { "status": 409, "startOffset": 10, "endOffset": 20 },
+  { "status": 400 }
+]
