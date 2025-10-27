@@ -27,9 +27,9 @@ jobs:
 
       - name: Build projects
         run: |
-          dotnet build "HotelBooking.Mvc/HotelBooking.Mvc.csproj" --configuration Release --no-restore
           dotnet build "HotelBooking.WebApi/HotelBooking.WebApi.csproj" --configuration Release --no-restore
           dotnet build "HotelBooking.UnitTests/HotelBooking.UnitTests.csproj" --configuration Release --no-restore
+          dotnet build "HotelBooking.BDDTests/HotelBooking.BDDTests.csproj" --configuration Release --no-restore
 
       - name: Run unit tests
         run: dotnet test "HotelBooking.UnitTests/HotelBooking.UnitTests.csproj" --no-build --configuration Release --logger:trx
