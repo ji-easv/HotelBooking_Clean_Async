@@ -20,7 +20,6 @@ builder.Services.AddScoped<IRepository<Room>, RoomRepository>();
 builder.Services.AddScoped<IRepository<Customer>, CustomerRepository>();
 builder.Services.AddScoped<IRepository<Booking>, BookingRepository>();
 builder.Services.AddScoped<IBookingManager, BookingManager>();
-builder.Services.AddTransient<IDbInitializer, DbInitializer>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -36,13 +35,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 
     // Initialize the database.
-    using (var scope = app.Services.CreateScope())
-    {
-        var services = scope.ServiceProvider;
-        var dbContext = services.GetService<HotelBookingContext>();
-        var dbInitializer = services.GetService<IDbInitializer>();
-        dbInitializer.Initialize(dbContext);
-    }
+    using var scope = app.Services.CreateScope();
+    var services = scope.ServiceProvider;
+    var dbContext = services.GetService<HotelBookingContext>();
+    var dbInitializer = new DbInitializer();
+    dbInitializer.Initialize(dbContext);
+} else if (app.Environment.IsEnvironment("Test"))
+{
+    using var scope = app.Services.CreateScope();
+    var services = scope.ServiceProvider;
+    var dbContext = services.GetService<HotelBookingContext>();
+    var dbInitializer = new TestDbInitializer();
+    dbInitializer.Initialize(dbContext);
 }
 
 app.UseHttpsRedirection();
@@ -52,3 +56,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+

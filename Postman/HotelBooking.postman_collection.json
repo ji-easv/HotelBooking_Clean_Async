@@ -313,6 +313,70 @@
 				},
 				{
 					"name": "/Bookings",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const status = pm.iterationData.get('status') ?? 201;\r",
+									"const startOffset = pm.iterationData.get('startOffset') ?? 1;\r",
+									"const endOffset = pm.iterationData.get('endOffset') ?? 2;\r",
+									"\r",
+									"const randomId = Math.floor(Math.random() * 1000);\r",
+									"const randomBoolean = Math.random() >= 0.5;\r",
+									"\r",
+									"function addDays(days) {\r",
+									"  var result = new Date();\r",
+									"  result.setDate(result.getDate() + days);\r",
+									"  return result.toISOString();\r",
+									"}\r",
+									"\r",
+									"let payload = '';\r",
+									"if (status !== 400) {\r",
+									"  payload = {\r",
+									"    id: randomId,\r",
+									"    startDate: addDays(Number(startOffset)),\r",
+									"    endDate: addDays(Number(endOffset)),\r",
+									"    isActive: randomBoolean,\r",
+									"    customerId: randomId,\r",
+									"    roomId: randomId,\r",
+									"    customer: {\r",
+									"      id: randomId,\r",
+									"      name: `Customer ${randomId}`,\r",
+									"      email: `customer${randomId}@example.com`\r",
+									"    },\r",
+									"    room: {\r",
+									"      id: randomId,\r",
+									"      description: `Room ${randomId} description`\r",
+									"    }\r",
+									"  };\r",
+									"  pm.request.body.raw = JSON.stringify(payload);\r",
+									"} else {\r",
+									"  pm.request.body.raw = '';\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"expectedStatusCode\", status);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code should match the expected result\", function () { \r",
+									"    const expected = pm.environment.get(\"expectedStatusCode\"); \r",
+									"    pm.response.to.have.status(expected);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -378,6 +442,80 @@
 							"header": [],
 							"cookie": [],
 							"body": ""
+						},
+						{
+							"name": "Bad request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Bookings",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Bookings"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Conflict",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"<integer>\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"isActive\": \"<boolean>\",\n  \"customerId\": \"<integer>\",\n  \"roomId\": \"<integer>\",\n  \"customer\": {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"email\": \"<string>\"\n  },\n  \"room\": {\n    \"id\": \"<integer>\",\n    \"description\": \"<string>\"\n  }\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Bookings",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Bookings"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
 						}
 					]
 				}
