@@ -7,6 +7,7 @@ on:
 
 jobs:
   build-and-test:
+    name: Build and Test
     runs-on: ubuntu-latest
 
     steps:
@@ -32,6 +33,9 @@ jobs:
 
       - name: Run unit tests
         run: dotnet test "HotelBooking.UnitTests/HotelBooking.UnitTests.csproj" --no-build --configuration Release --logger:trx
+
+      - name: Run BDD (Cucumber/Reqnroll) tests
+        run: dotnet test "HotelBooking.BDDTests/HotelBooking.BDDTests.csproj" --no-build --configuration Release --logger:trx
 
       - name: Install newman
         run: npm install -g newman
