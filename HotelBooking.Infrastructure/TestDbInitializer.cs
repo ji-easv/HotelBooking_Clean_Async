@@ -19,24 +19,26 @@ namespace HotelBooking.Infrastructure
 
             var customers = new List<Customer>
             {
-                new Customer { Name = "Test User 1", Email = "test1@example.com" },
-                new Customer { Name = "Test User 2", Email = "test2@example.com" }
+                new() { Name = "Test User 1", Email = "test1@example.com" },
+                new() { Name = "Test User 2", Email = "test2@example.com" }
             };
 
             var rooms = new List<Room>
             {
-                new Room { Description = "Room 1" },
-                new Room { Description = "Room 2" },
-                new Room { Description = "Room 3" }
+                new() { Description = "Room 1" },
+                new() { Description = "Room 2" },
+                new() { Description = "Room 3" }
             };
 
             context.Customer.AddRange(customers);
             context.Room.AddRange(rooms);
             context.SaveChanges();
 
+            Console.WriteLine("Seeding bookings...");
             var startDate = DateTime.Today.AddDays(10);
             var endDate = DateTime.Today.AddDays(20);
-            var bookings = context.Room.Select((room, idx) => new Booking
+            var roomList = context.Room.ToList();
+            var bookings = roomList.Select((room, idx) => new Booking
             {
                 StartDate = startDate,
                 EndDate = endDate,
@@ -50,4 +52,3 @@ namespace HotelBooking.Infrastructure
         }
     }
 }
-

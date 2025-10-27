@@ -35,18 +35,22 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 
     // Initialize the database.
+    Console.WriteLine("Seeding development database...");
     using var scope = app.Services.CreateScope();
     var services = scope.ServiceProvider;
     var dbContext = services.GetService<HotelBookingContext>();
     var dbInitializer = new DbInitializer();
     dbInitializer.Initialize(dbContext);
+    Console.WriteLine("Development database seeded.");
 } else if (app.Environment.IsEnvironment("Test"))
 {
+    Console.WriteLine("Seeding test database...");
     using var scope = app.Services.CreateScope();
     var services = scope.ServiceProvider;
     var dbContext = services.GetService<HotelBookingContext>();
     var dbInitializer = new TestDbInitializer();
     dbInitializer.Initialize(dbContext);
+    Console.WriteLine("Test database seeded.");
 }
 
 app.UseHttpsRedirection();
