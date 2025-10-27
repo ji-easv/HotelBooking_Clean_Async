@@ -21,9 +21,9 @@ jobs:
 
       - name: Restore dependencies
         run: |
-          dotnet restore "HotelBooking.Mvc/HotelBooking.Mvc.csproj"
           dotnet restore "HotelBooking.WebApi/HotelBooking.WebApi.csproj"
           dotnet restore "HotelBooking.UnitTests/HotelBooking.UnitTests.csproj"
+          dotnet restore "HotelBooking.BDDTests/HotelBooking.BDDTests.csproj"
 
       - name: Build projects
         run: |
