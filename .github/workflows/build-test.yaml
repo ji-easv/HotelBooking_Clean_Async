@@ -7,6 +7,7 @@ on:
 
 jobs:
   build-and-test:
+    name: Build and Test
     runs-on: ubuntu-latest
 
     steps:
@@ -20,18 +21,21 @@ jobs:
 
       - name: Restore dependencies
         run: |
-          dotnet restore "HotelBooking.Mvc/HotelBooking.Mvc.csproj"
           dotnet restore "HotelBooking.WebApi/HotelBooking.WebApi.csproj"
           dotnet restore "HotelBooking.UnitTests/HotelBooking.UnitTests.csproj"
+          dotnet restore "HotelBooking.BDDTests/HotelBooking.BDDTests.csproj"
 
       - name: Build projects
         run: |
-          dotnet build "HotelBooking.Mvc/HotelBooking.Mvc.csproj" --configuration Release --no-restore
           dotnet build "HotelBooking.WebApi/HotelBooking.WebApi.csproj" --configuration Release --no-restore
           dotnet build "HotelBooking.UnitTests/HotelBooking.UnitTests.csproj" --configuration Release --no-restore
+          dotnet build "HotelBooking.BDDTests/HotelBooking.BDDTests.csproj" --configuration Release --no-restore
 
       - name: Run unit tests
         run: dotnet test "HotelBooking.UnitTests/HotelBooking.UnitTests.csproj" --no-build --configuration Release --logger:trx
+
+      - name: Run BDD (Cucumber/Reqnroll) tests
+        run: dotnet test "HotelBooking.BDDTests/HotelBooking.BDDTests.csproj" --no-build --configuration Release --logger:trx
 
       - name: Install newman
         run: npm install -g newman
