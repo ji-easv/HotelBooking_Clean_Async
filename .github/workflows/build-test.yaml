@@ -42,8 +42,6 @@ jobs:
 
       - name: Start API
         run: dotnet run --project "HotelBooking.WebApi/HotelBooking.WebApi.csproj" --launch-profile "Test" &
-        env:
-          ASPNETCORE_URLS: http://localhost:5000
 
       - name: Wait for API to be ready
         run: |
