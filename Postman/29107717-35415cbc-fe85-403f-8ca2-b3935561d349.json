@@ -1,0 +1,998 @@
+{
+	"info": {
+		"_postman_id": "29107717-35415cbc-fe85-403f-8ca2-b3935561d349",
+		"name": "HotelBooking.WebApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Bookings",
+			"item": [
+				{
+					"name": "{id}",
+					"item": [
+						{
+							"name": "Get Booking",
+							"id": "29107717-e292643f-4f53-4856-af46-c10aeee154f5",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/Bookings/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Bookings",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "29107717-fad63e1b-ccac-4322-9ff7-4d5cd56a01fc",
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/Bookings/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Bookings",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"responseTime": null,
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "/Bookings/:id",
+							"id": "29107717-049c4be5-7a90-433d-8a72-26801c198111",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"<integer>\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"isActive\": \"<boolean>\",\n  \"customerId\": \"<integer>\",\n  \"roomId\": \"<integer>\",\n  \"customer\": {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"email\": \"<string>\"\n  },\n  \"room\": {\n    \"id\": \"<integer>\",\n    \"description\": \"<string>\"\n  }\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Bookings/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Bookings",
+										":id"
+									],
+									"variable": [
+										{
+											"id": "2b52699a-7765-49fa-8543-904fca7c53bd",
+											"key": "id",
+											"value": "<integer>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "29107717-9339688f-fa77-4386-ae05-f8b631170d4c",
+									"name": "OK",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<integer>\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"isActive\": \"<boolean>\",\n  \"customerId\": \"<integer>\",\n  \"roomId\": \"<integer>\",\n  \"customer\": {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"email\": \"<string>\"\n  },\n  \"room\": {\n    \"id\": \"<integer>\",\n    \"description\": \"<string>\"\n  }\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/Bookings/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Bookings",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"responseTime": null,
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "/Bookings/:id",
+							"id": "29107717-e8847a80-befd-4f8a-9df1-26a1f70e6b93",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/Bookings/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Bookings",
+										":id"
+									],
+									"variable": [
+										{
+											"id": "81d2a904-90d5-41bf-823d-350d0c2bc5a4",
+											"key": "id",
+											"value": "<integer>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "29107717-9aa7ecdd-6f07-44ec-856b-9e36c308ad28",
+									"name": "OK",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/Bookings/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Bookings",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"responseTime": null,
+									"body": ""
+								}
+							]
+						}
+					],
+					"id": "29107717-721af9c8-4dc0-41db-9a10-9463d3cafea5"
+				},
+				{
+					"name": "Get Bookings",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9eda34f6-f1a4-4268-b8c3-352768f82530",
+								"exec": [
+									"// Check if the response status code is 200\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"// Parse the response body as JSON\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"// Validate the response structure\r",
+									"pm.test(\"Response is an array\", function () {\r",
+									"    pm.expect(response).to.be.an('array').that.is.not.empty;\r",
+									"});\r",
+									"\r",
+									"// Loop through each booking to validate properties\r",
+									"response.forEach(booking => {\r",
+									"    pm.test(`Booking with ID ${booking.id} has required properties`, function () {\r",
+									"        pm.expect(booking).to.have.all.keys('id', 'startDate', 'endDate', 'isActive', 'customerId', 'roomId', 'customer', 'room');\r",
+									"        pm.expect(booking.startDate).to.be.a('string');\r",
+									"        pm.expect(booking.endDate).to.be.a('string');\r",
+									"        pm.expect(booking.isActive).to.be.a('boolean');\r",
+									"        pm.expect(booking.customerId).to.be.a('number');\r",
+									"        pm.expect(booking.roomId).to.be.a('number');\r",
+									"\r",
+									"        // Validate customer object\r",
+									"        pm.expect(booking.customer).to.have.all.keys('id', 'name', 'email');\r",
+									"        pm.expect(booking.customer.name).to.be.a('string');\r",
+									"        pm.expect(booking.customer.email).to.be.a('string');\r",
+									"\r",
+									"        // Validate room object\r",
+									"        pm.expect(booking.room).to.have.all.keys('id', 'description');\r",
+									"        pm.expect(booking.room.description).to.be.a('string');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"// Check the content-type header\r",
+									"pm.test(\"Content-Type is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "29107717-f59a180c-751b-45ef-90a8-de1c5d242a61",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/plain"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/Bookings",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Bookings"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "29107717-a3cd8afb-8e16-46b7-87bc-e445b875af86",
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/Bookings",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Bookings"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "[\n  {\n    \"id\": \"<integer>\",\n    \"startDate\": \"<dateTime>\",\n    \"endDate\": \"<dateTime>\",\n    \"isActive\": \"<boolean>\",\n    \"customerId\": \"<integer>\",\n    \"roomId\": \"<integer>\",\n    \"customer\": {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"email\": \"<string>\"\n    },\n    \"room\": {\n      \"id\": \"<integer>\",\n      \"description\": \"<string>\"\n    }\n  },\n  {\n    \"id\": \"<integer>\",\n    \"startDate\": \"<dateTime>\",\n    \"endDate\": \"<dateTime>\",\n    \"isActive\": \"<boolean>\",\n    \"customerId\": \"<integer>\",\n    \"roomId\": \"<integer>\",\n    \"customer\": {\n      \"id\": \"<integer>\",\n      \"name\": \"<string>\",\n      \"email\": \"<string>\"\n    },\n    \"room\": {\n      \"id\": \"<integer>\",\n      \"description\": \"<string>\"\n    }\n  }\n]"
+						}
+					]
+				},
+				{
+					"name": "/Bookings",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c4ee3b13-c74f-40db-8d90-49db702e9a02",
+								"exec": [
+									"const status = pm.iterationData.get('status') ?? 201;\r",
+									"const startOffset = pm.iterationData.get('startOffset') ?? 1;\r",
+									"const endOffset = pm.iterationData.get('endOffset') ?? 2;\r",
+									"\r",
+									"const randomId = Math.floor(Math.random() * 1000);\r",
+									"\r",
+									"function addDays(days) {\r",
+									"  var result = new Date();\r",
+									"  result.setDate(result.getDate() + days);\r",
+									"  return result.toISOString();\r",
+									"}\r",
+									"\r",
+									"let payload = '';\r",
+									"if (status !== 400) {\r",
+									"  payload = {\r",
+									"    id: randomId,\r",
+									"    startDate: addDays(Number(startOffset)),\r",
+									"    endDate: addDays(Number(endOffset)),\r",
+									"    isActive: true,\r",
+									"    customerId: randomId,\r",
+									"    roomId: 1,\r",
+									"    customer: {\r",
+									"      id: randomId,\r",
+									"      name: `Customer ${randomId}`,\r",
+									"      email: `customer${randomId}@example.com`\r",
+									"    },\r",
+									"    room: {\r",
+									"      id: 1,\r",
+									"      description: `Room 1 description`\r",
+									"    }\r",
+									"  };\r",
+									"  pm.request.body.raw = JSON.stringify(payload);\r",
+									"} else {\r",
+									"  pm.request.body.raw = '';\r",
+									"}\r",
+									"\r",
+									"pm.environment.set(\"expectedStatusCode\", status);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d26f478d-6f2c-4c91-819f-2bd7ab764d4a",
+								"exec": [
+									"pm.test(\"Status code should match the expected result\", function () { \r",
+									"    const expected = pm.environment.get(\"expectedStatusCode\"); \r",
+									"    pm.response.to.have.status(expected);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"id": "29107717-6be115ad-b2a8-4300-a062-08b7a89be65f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"<integer>\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"isActive\": \"<boolean>\",\n  \"customerId\": \"<integer>\",\n  \"roomId\": \"<integer>\",\n  \"customer\": {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"email\": \"<string>\"\n  },\n  \"room\": {\n    \"id\": \"<integer>\",\n    \"description\": \"<string>\"\n  }\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/Bookings",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Bookings"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "29107717-3a14cb8a-95ce-40cb-b8dc-b2c2e889e4bd",
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"<integer>\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"isActive\": \"<boolean>\",\n  \"customerId\": \"<integer>\",\n  \"roomId\": \"<integer>\",\n  \"customer\": {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"email\": \"<string>\"\n  },\n  \"room\": {\n    \"id\": \"<integer>\",\n    \"description\": \"<string>\"\n  }\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Bookings",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Bookings"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						},
+						{
+							"id": "29107717-6d451dee-2cf1-40d4-a5d5-877ddab910ad",
+							"name": "Bad request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Bookings",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Bookings"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"responseTime": null,
+							"body": null
+						},
+						{
+							"id": "29107717-dab7a527-4216-4968-bc44-42067676644e",
+							"name": "Conflict",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"<integer>\",\n  \"startDate\": \"<dateTime>\",\n  \"endDate\": \"<dateTime>\",\n  \"isActive\": \"<boolean>\",\n  \"customerId\": \"<integer>\",\n  \"roomId\": \"<integer>\",\n  \"customer\": {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"email\": \"<string>\"\n  },\n  \"room\": {\n    \"id\": \"<integer>\",\n    \"description\": \"<string>\"\n  }\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Bookings",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Bookings"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"responseTime": null,
+							"body": null
+						}
+					]
+				}
+			],
+			"id": "29107717-9608652d-59fc-4fd2-80b4-19cbc775550d"
+		},
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "/Customers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b09d7378-7331-42de-b5fa-061bcb02f0e6",
+								"exec": [
+									"// Check the status code of the response\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"// Parse the response body\r",
+									"const response = pm.response.json();\r",
+									"\r",
+									"// Validate the response structure\r",
+									"pm.test(\"Response is an array\", function () {\r",
+									"    pm.expect(response).to.be.an(\"array\");\r",
+									"});\r",
+									"\r",
+									"// Loop through each customer in the response\r",
+									"response.forEach(customer => {\r",
+									"    pm.test(\"Customer has required properties\", function () {\r",
+									"        pm.expect(customer).to.have.all.keys(\"id\", \"name\", \"email\");\r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Customer id is a number\", function () {\r",
+									"        pm.expect(customer.id).to.be.a(\"number\");\r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Customer name is a string\", function () {\r",
+									"        pm.expect(customer.name).to.be.a(\"string\");\r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Customer email is a string\", function () {\r",
+									"        pm.expect(customer.email).to.be.a(\"string\");\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"// Check the content type of the response\r",
+									"pm.test(\"Content-Type is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"id": "29107717-7e227f9b-e486-4934-9d23-8e2ddf16eecd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/plain"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/Customers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Customers"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "29107717-1c8c314c-a523-46e2-b73a-30e82dbc005b",
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/Customers",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Customers"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "[\n  {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"email\": \"<string>\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"name\": \"<string>\",\n    \"email\": \"<string>\"\n  }\n]"
+						}
+					]
+				}
+			],
+			"id": "29107717-339acad7-4db2-4c43-92e3-54c57746aa16"
+		},
+		{
+			"name": "Rooms",
+			"item": [
+				{
+					"name": "{id}",
+					"item": [
+						{
+							"name": "/Rooms/:id",
+							"id": "29107717-72a00f9e-7a63-4958-880c-284ddaf35a72",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/Rooms/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Rooms",
+										":id"
+									],
+									"variable": [
+										{
+											"id": "d9c76696-822c-495b-ba62-96b0b5c14617",
+											"key": "id",
+											"value": "<integer>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "29107717-1e073f4a-a6bb-4722-98f6-5b716f7d0024",
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/Rooms/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Rooms",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"responseTime": null,
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "/Rooms/:id",
+							"id": "29107717-6b608417-1ce6-4dcb-8442-5a2288dd933d",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/Rooms/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Rooms",
+										":id"
+									],
+									"variable": [
+										{
+											"id": "f882be3f-7d96-4505-999f-98c04fa7937f",
+											"key": "id",
+											"value": "<integer>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"id": "29107717-fd706d0e-c59d-4315-b05a-ccba38757581",
+									"name": "OK",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/Rooms/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"Rooms",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [],
+									"cookie": [],
+									"responseTime": null,
+									"body": ""
+								}
+							]
+						}
+					],
+					"id": "29107717-e391367c-e4dd-4d98-9270-e34958d98099"
+				},
+				{
+					"name": "Get Rooms",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c4a9cdb5-e77b-4ae5-9f4d-b09db8d063a9",
+								"exec": [
+									"const response = pm.response.json();\r",
+									"\r",
+									"// Test for successful status code\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"// Test for response structure and properties\r",
+									"pm.test(\"Response is an array\", function () {\r",
+									"    pm.expect(response).to.be.an('array');\r",
+									"});\r",
+									"\r",
+									"// Loop through each room object in the response\r",
+									"response.forEach((room) => {\r",
+									"    pm.test(\"Room object has required properties\", function () {\r",
+									"        pm.expect(room).to.have.property('id');\r",
+									"        pm.expect(room.id).to.be.a('number');\r",
+									"\r",
+									"        pm.expect(room).to.have.property('description');\r",
+									"        pm.expect(room.description).to.be.a('string');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"// Test for content-type header\r",
+									"pm.test(\"Content-Type is application/json\", function () {\r",
+									"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"id": "29107717-149e6fe2-507c-4b71-8f6f-7a43fbdb8645",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/plain"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/Rooms",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Rooms"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "29107717-833d9543-0c9e-4a59-ae4a-238fc3323ec0",
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "text/plain"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/Rooms",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Rooms"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"responseTime": null,
+							"body": "[\n  {\n    \"id\": \"<integer>\",\n    \"description\": \"<string>\"\n  },\n  {\n    \"id\": \"<integer>\",\n    \"description\": \"<string>\"\n  }\n]"
+						}
+					]
+				},
+				{
+					"name": "/Rooms",
+					"id": "29107717-67072e5a-4e16-4fe4-8bc5-505e5f1de1c8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"<integer>\",\n  \"description\": \"<string>\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/Rooms",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Rooms"
+							]
+						}
+					},
+					"response": [
+						{
+							"id": "29107717-b537804d-c316-4864-a4e4-bae06fe3b9ee",
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"<integer>\",\n  \"description\": \"<string>\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Rooms",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Rooms"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [],
+							"cookie": [],
+							"responseTime": null,
+							"body": ""
+						}
+					]
+				}
+			],
+			"id": "29107717-065d9f96-2b9a-4531-9bd2-053187f41d09"
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "/"
+		}
+	]
+}
