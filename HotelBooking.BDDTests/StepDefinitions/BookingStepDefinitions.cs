@@ -1,6 +1,7 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using HotelBooking.BDDTests.Utils;
 using HotelBooking.Core;
 using HotelBooking.Core.Interfaces;
 using HotelBooking.WebApi.Controllers;
@@ -14,9 +15,9 @@ namespace HotelBooking.BDDTests.StepDefinitions;
 [Binding]
 public sealed class BookingStepDefinitions
 {
-    private readonly Mock<IRepository<Booking>> mockBookingRepository = new();
-    private readonly Mock<IBookingManager> mockBookingManager = new();
     private readonly BookingsController controller;
+    private readonly Mock<IRepository<Booking>> mockBookingRepository;
+    private readonly Mock<IBookingManager> mockBookingManager = new();
 
     private IActionResult lastResult;
     private Booking bookingRequest;
@@ -24,6 +25,7 @@ public sealed class BookingStepDefinitions
 
     public BookingStepDefinitions()
     {
+        mockBookingRepository = Utilities.SetUpBookingRepositoryMocks();
         controller = new BookingsController(mockBookingRepository.Object, mockBookingManager.Object);
     }
 

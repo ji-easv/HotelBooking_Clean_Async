@@ -1,5 +1,9 @@
 ﻿[
-  { "status": 201, "startOffset": 1, "endOffset": 2 },
+  { "status": 201, "startOffset": 1, "endOffset": 9 },
+  { "status": 201, "startOffset": 21, "endOffset": 22 },
+  { "status": 409, "startOffset": 9, "endOffset": 21 },
+  { "status": 409, "startOffset": 9, "endOffset": 10 },
+  { "status": 409, "startOffset": 20, "endOffset": 21 },
   { "status": 409, "startOffset": 10, "endOffset": 20 },
   { "status": 400 }
 ]
