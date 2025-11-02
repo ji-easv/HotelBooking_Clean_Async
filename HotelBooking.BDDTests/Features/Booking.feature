@@ -26,5 +26,10 @@ Room booking feature for a hotel booking system
       | startDateOffset | endDateOffset |
       | 9               | 21            |
       | 9               | 10            |
+      | 9               | 20            |
+      | 10              | 21            |
       | 20              | 21            |
       | 10              | 20            |
+      | 10              | 10            |
+      | 20              | 20            |
+      
