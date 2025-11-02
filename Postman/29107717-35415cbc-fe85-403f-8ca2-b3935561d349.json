@@ -106,7 +106,6 @@
 									],
 									"variable": [
 										{
-											"id": "2b52699a-7765-49fa-8543-904fca7c53bd",
 											"key": "id",
 											"value": "<integer>",
 											"description": "(Required) "
@@ -182,7 +181,6 @@
 									],
 									"variable": [
 										{
-											"id": "81d2a904-90d5-41bf-823d-350d0c2bc5a4",
 											"key": "id",
 											"value": "<integer>",
 											"description": "(Required) "
@@ -510,7 +508,7 @@
 							},
 							"status": "Bad Request",
 							"code": 400,
-							"_postman_previewlanguage": null,
+							"_postman_previewlanguage": "Text",
 							"header": null,
 							"cookie": [],
 							"responseTime": null,
@@ -549,7 +547,7 @@
 							},
 							"status": "Conflict",
 							"code": 409,
-							"_postman_previewlanguage": null,
+							"_postman_previewlanguage": "Text",
 							"header": null,
 							"cookie": [],
 							"responseTime": null,
@@ -702,7 +700,6 @@
 									],
 									"variable": [
 										{
-											"id": "d9c76696-822c-495b-ba62-96b0b5c14617",
 											"key": "id",
 											"value": "<integer>",
 											"description": "(Required) "
@@ -763,7 +760,6 @@
 									],
 									"variable": [
 										{
-											"id": "f882be3f-7d96-4505-999f-98c04fa7937f",
 											"key": "id",
 											"value": "<integer>",
 											"description": "(Required) "
