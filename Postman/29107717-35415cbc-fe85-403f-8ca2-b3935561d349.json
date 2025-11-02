@@ -31,7 +31,6 @@
 									],
 									"variable": [
 										{
-											"id": "7d34e713-e0b7-417b-b945-9be750a5f6e0",
 											"key": "id",
 											"value": "1",
 											"description": "(Required) "
@@ -988,32 +987,6 @@
 				}
 			],
 			"id": "29107717-065d9f96-2b9a-4531-9bd2-053187f41d09"
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"id": "709d67cc-b918-401a-9a2b-1a1e6dd2e7df",
-				"type": "text/javascript",
-				"packages": {},
-				"requests": {},
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"id": "851b212f-24aa-42e3-b5b5-cff2bae2a2ce",
-				"type": "text/javascript",
-				"packages": {},
-				"requests": {},
-				"exec": [
-					""
-				]
-			}
 		}
 	],
 	"variable": [
