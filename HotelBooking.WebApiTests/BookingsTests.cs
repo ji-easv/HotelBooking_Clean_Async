@@ -68,12 +68,16 @@ public class BookingsTests : IClassFixture<HotelBookingWebApplicationFactory>
     }
 
     [Theory]
-    [InlineData(1, 9, 201)]       // First test case - 6 days offset
-    [InlineData(21, 22, 201)]     // Second test case - far future booking
-    [InlineData(9, 21, 409)]      // Third test case - overlaps entire existing booking
-    [InlineData(9, 10, 409)]      // Fourth test case - overlaps start
-    [InlineData(20, 21, 409)]     // Fifth test case - overlaps end
-    [InlineData(10, 20, 409)]     // Sixth test case - exact overlap
+    [InlineData(1, 9, 201)] // Before occupied range
+    [InlineData(21, 22, 201)] // After occupied range
+    [InlineData(9, 21, 409)]
+    [InlineData(9, 10, 409)]
+    [InlineData(9, 20, 409)]
+    [InlineData(10, 21, 409)]
+    [InlineData(20, 21, 409)]
+    [InlineData(10, 20, 409)]
+    [InlineData(10, 10, 409)]
+    [InlineData(20, 20, 409)]
     public async Task PostBooking_WithVariousDateRanges_ReturnsExpectedStatus(int startOffset, int endOffset, int expectedStatus)
     {
         // Arrange
